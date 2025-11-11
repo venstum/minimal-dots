@@ -24,7 +24,10 @@ sudo pacman -Syu --noconfirm \
   ufw \
   waybar \
   rofi-wayland \ 
-  tmux
+  tmux \ 
+  pavucontrol \
+  network-manager-applet \
+  nwg-look
 
 echo "=== Enabling UFW firewall ==="
 sudo ufw enable
