@@ -20,10 +20,3 @@ Clone the repository:
 git clone https://github.com/venstum/minimal-dots
 cd minimal-dots
 ```
-
-## 🧩 How to Run the Scripts
-```bash
-chmod +x setup.sh start.sh
-sudo ./setup.sh
-sudo ./start.sh
-```
