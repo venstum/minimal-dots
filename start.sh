@@ -6,8 +6,10 @@ if ! command -v pacman >/dev/null 2>&1; then
   exit 1
 fi
 
-sudo pacman -Sy --needed --noconfirm \
+sudo pacman -Syu --noconfirm \
   hyprland \
+  rofi-wayland \
+  waybar \
   xdg-desktop-portal-hyprland \
   kitty \
   terminus-font \
