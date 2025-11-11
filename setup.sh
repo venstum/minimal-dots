@@ -10,7 +10,7 @@ if ! command -v pacman >/dev/null 2>&1; then
 fi
 
 echo "=== Installing required packages ==="
-sudo pacman -Sy --needed --noconfirm \
+sudo pacman -Syu --noconfirm \
   hyprland \
   xdg-desktop-portal-hyprland \
   kitty \
