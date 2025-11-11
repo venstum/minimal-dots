@@ -23,7 +23,8 @@ sudo pacman -Syu --noconfirm \
   python \
   ufw \
   waybar \
-  rofi-wayland
+  rofi-wayland \ 
+  tmux
 
 echo "=== Enabling UFW firewall ==="
 sudo ufw enable
