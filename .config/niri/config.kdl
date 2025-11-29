@@ -1,8 +1,6 @@
 prefer-no-csd
 environment {
     WLR_NO_HARDWARE_CURSORS "1"
-    HYPRCURSOR_THEME "Bibata-Modern-Ice"
-    HYPRCURSOR_SIZE "24"
     __GLX_VENDOR_LIBRARY_NAME "nvidia"
     GBM_BACKEND "nvidia-drm"
     LIBVA_DRIVER_NAME "nvidia"
@@ -115,8 +113,6 @@ spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
 spawn-at-startup "waybar"
 spawn-at-startup "wl-paste" "--type" "text" "--watch" "cliphist" "store"
 spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
-// Note: hyprctl might not work outside Hyprland, but keeping it as requested.
-spawn-at-startup "hyprctl" "setcursor" "Bibata-Modern-Ice" "24"
 // Rounding
 window-rule {
     geometry-corner-radius 20
