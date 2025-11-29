@@ -54,8 +54,7 @@ layout {
 
 // Animations
 animations {
-    // Toned, slightly snappier animations with gentle springs.
-    // Uncomment slowdown to globally speed up/slow down.
+    // Snappy animations; uncomment slowdown to adjust.
     // slowdown 1.0
 
     workspace-switch {
@@ -121,13 +120,13 @@ window-rule {
 
 // Opacity Rules
 window-rule {
-    match app-id=r#"^(kitty|thunar|Thunar|nwg-look|file-roller|org\.manjaro\.pamac\.manager|spotube|pavucontrol|nm-connection-editor|org\.gnome\.FileRoller|steam|zenity|Rofi|cmake-gui|codium-url-handler|Bitwarden|evince|Tk|feh)$"#
-    opacity 0.7
+    match app-id=r#"^(kitty|nautilus|Nautilus|org\.gnome\.Nautilus|nwg-look|file-roller|org\.manjaro\.pamac\.manager|spotube|pavucontrol|nm-connection-editor|org\.gnome\.FileRoller|steam|zenity|Rofi|cmake-gui|codium-url-handler|Bitwarden|evince|Tk|feh)$"#
+    opacity 0.9
 }
 
 // Floating Rules
 window-rule {
-    match app-id=r#"^(kitty|thunar|Thunar|nwg-look|file-roller|org\.manjaro\.pamac\.manager|spotube|pavucontrol|nm-connection-editor|org\.gnome\.FileRoller|Rofi|cmake-gui|Bitwarden|Tk|feh)$"#
+    match app-id=r#"^(kitty|nautilus|Nautilus|org\.gnome\.Nautilus|nwg-look|file-roller|org\.manjaro\.pamac\.manager|spotube|pavucontrol|nm-connection-editor|org\.gnome\.FileRoller|Rofi|cmake-gui|Bitwarden|Tk|feh)$"#
     open-floating true
 }
 
@@ -144,46 +143,28 @@ window-rule {
     opacity 0.9
 }
 binds {
-    // Keys consist of modifiers separated by + signs, followed by an XKB key name
-    // in the end. To find an XKB name for a particular key, you may use a program
-    // like wev.
-    //
-    // "Mod" is a special modifier equal to Super when running on a TTY, and to Alt
-    // when running as a winit window.
-    //
-    // Most actions that you can bind here can also be invoked programmatically with
-    // `niri msg action do-something`.
+    // Use wev to find key names; Mod = Super on TTY, Alt in winit window.
 
-    // Mod-Shift-/, which is usually the same as Mod-?,
-    // shows a list of important hotkeys.
+    // Quick help.
     Super+Shift+Slash { show-hotkey-overlay; }
 
-    // Suggested binds for running programs: terminal, app launcher, screen locker.
+    // Launchers.
     Super+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-
-    // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
-    // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
-    // For example, this is a standard bind to toggle the screen reader (orca).
+    // Example shell bind (screen reader toggle).
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
-    // Example volume keys mappings for PipeWire & WirePlumber.
-    // The allow-when-locked=true property makes them work even when the session is locked.
-    // Using spawn-sh allows to pass multiple arguments together with the command.
+    // Media keys.
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
-    // Example brightness key mappings for brightnessctl.
-    // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
-    // but you need to manually put each argument in separate "" quotes.
+    // Brightness keys.
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
-    // Open/close the Overview: a zoomed-out view of workspaces and windows.
-    // You can also move the mouse into the top-left hot corner,
-    // or do a four-finger swipe up on a touchpad.
+    // Overview toggle.
     Super+O repeat=false { toggle-overview; }
 
     // Super+Q repeat=false { close-window; }
@@ -206,8 +187,7 @@ binds {
     Super+Ctrl+K     { move-window-up; }
     Super+Ctrl+L     { move-column-right; }
 
-    // Alternative commands that move across workspaces when reaching
-    // the first or last window in a column.
+    // Jump across edges into next workspace when needed.
     Super+Alt+J { focus-window-or-workspace-down; }
     Super+Alt+K { focus-window-or-workspace-up; }
     // Super+Ctrl+J     { move-window-down-or-to-workspace-down; }
@@ -236,14 +216,6 @@ binds {
     Super+Shift+Ctrl+K     { move-column-to-monitor-up; }
     Super+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Super+Shift+Ctrl+Left  { move-window-to-monitor-left; }
-    // ...
-
-    // And you can also move a whole workspace to another monitor:
-    // Super+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
-    // ...
-
     Super+Page_Down      { focus-workspace-down; }
     Super+Page_Up        { focus-workspace-up; }
     Super+U              { focus-workspace-down; }
@@ -253,21 +225,12 @@ binds {
     Super+Ctrl+U         { move-column-to-workspace-down; }
     Super+Ctrl+I         { move-column-to-workspace-up; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Super+Ctrl+Page_Down { move-window-to-workspace-down; }
-    // ...
-
     Super+Shift+Page_Down { move-workspace-down; }
     Super+Shift+Page_Up   { move-workspace-up; }
     Super+Shift+U         { move-workspace-down; }
     Super+Shift+I         { move-workspace-up; }
 
-    // You can bind mouse wheel scroll ticks using the following syntax.
-    // These binds will change direction based on the natural-scroll setting.
-    //
-    // To avoid scrolling through workspaces really fast, you can use
-    // the cooldown-ms property. The bind will be rate-limited to this value.
-    // You can set a cooldown on any bind, but it's most useful for the wheel.
+    // Scroll binds.
     Super+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Super+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
     Super+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
@@ -278,30 +241,17 @@ binds {
     Super+Ctrl+WheelScrollRight { move-column-right; }
     Super+Ctrl+WheelScrollLeft  { move-column-left; }
 
-    // Usually scrolling up and down with Shift in applications results in
-    // horizontal scrolling; these binds replicate that.
+    // Shift-scroll behaves like horizontal scroll.
     Super+Shift+WheelScrollDown      { focus-column-right; }
     Super+Shift+WheelScrollUp        { focus-column-left; }
     Super+Ctrl+Shift+WheelScrollDown { move-column-right; }
     Super+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-    // Similarly, you can bind touchpad scroll "ticks".
-    // Touchpad scrolling is continuous, so for these binds it is split into
-    // discrete intervals.
-    // These binds are also affected by touchpad's natural-scroll, so these
-    // example binds are "inverted", since we have natural-scroll enabled for
-    // touchpads by default.
+    // Touchpad scroll examples.
     // Super+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
     // Super+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
 
-    // You can refer to workspaces by index. However, keep in mind that
-    // niri is a dynamic workspace system, so these commands are kind of
-    // "best effort". Trying to refer to a workspace index bigger than
-    // the current workspace count will instead refer to the bottommost
-    // (empty) workspace.
-    //
-    // For example, with 2 workspaces + 1 empty, indices 3, 4, 5 and so on
-    // will all refer to the 3rd workspace.
+    // Workspace hotkeys.
     Super+1 { focus-workspace 1; }
     Super+2 { focus-workspace 2; }
     Super+3 { focus-workspace 3; }
@@ -321,21 +271,14 @@ binds {
     Super+Ctrl+8 { move-column-to-workspace 8; }
     Super+Ctrl+9 { move-column-to-workspace 9; }
 
-    // Alternatively, there are commands to move just a single window:
-    // Super+Ctrl+1 { move-window-to-workspace 1; }
-
-    // Switches focus between the current and the previous workspace.
+    // Quick swap to previous workspace.
     Super+Tab repeat=false { focus-workspace-previous; }
 
-    // The following binds move the focused window in and out of a column.
-    // If the window is alone, they will consume it into the nearby column to the side.
-    // If the window is already in a column, they will expel it out.
+    // Move windows in/out of columns.
     Super+BracketLeft  { consume-or-expel-window-left; }
     Super+BracketRight { consume-or-expel-window-right; }
 
-    // Consume one window from the right to the bottom of the focused column.
     Super+Comma  { consume-window-into-column; }
-    // Expel the bottom window from the focused column to the right.
     Super+Period { expel-window-from-column; }
 
     // Super+R { switch-preset-column-width; }
@@ -348,8 +291,7 @@ binds {
     Super+F { maximize-column; }
     Super+Shift+F { fullscreen-window; }
 
-    // Expand the focused column to space not taken up by other fully visible columns.
-    // Makes the column "fill the rest of the space".
+    // Expand into remaining visible space.
     Super+Ctrl+F { expand-column-to-available-width; }
 
     // Super+C { center-column; }
@@ -357,35 +299,21 @@ binds {
     // Center all fully visible columns on screen.
     Super+Ctrl+C { center-visible-columns; }
 
-    // Finer width adjustments.
-    // This command can also:
-    // * set width in pixels: "1000"
-    // * adjust width in pixels: "-5" or "+5"
-    // * set width as a percentage of screen width: "25%"
-    // * adjust width as a percentage of screen width: "-10%" or "+10%"
-    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
-    // set-column-width "100" will make the column occupy 200 physical screen pixels.
+    // Column width tweaks.
     Super+Minus { set-column-width "-10%"; }
     Super+Equal { set-column-width "+10%"; }
 
-    // Finer height adjustments when in column with other windows.
+    // Column height tweaks.
     Super+Shift+Minus { set-window-height "-10%"; }
     Super+Shift+Equal { set-window-height "+10%"; }
 
-    // Move the focused window between the floating and the tiling layout.
-    // Super+V       { toggle-window-floating; }
+    // Toggle floating vs tiling.
     Super+Shift+V { switch-focus-between-floating-and-tiling; }
 
-    // Toggle tabbed column display mode.
-    // Windows in this column will appear as vertical tabs,
-    // rather than stacked on top of each other.
+    // Tabbed column mode.
     Super+W { toggle-column-tabbed-display; }
 
-    // Actions to switch layouts.
-    // Note: if you uncomment these, make sure you do NOT have
-    // a matching layout switch hotkey configured in xkb options above.
-    // Having both at once on the same hotkey will break the switching,
-    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
+    // Layout switching (keep xkb options in mind).
     // Super+Space       { switch-layout "next"; }
     // Super+Shift+Space { switch-layout "prev"; }
 
@@ -393,22 +321,14 @@ binds {
     Ctrl+Print { screenshot-screen; }
     Alt+Print { screenshot-window; }
 
-    // Applications such as remote-desktop clients and software KVM switches may
-    // request that niri stops processing the keyboard shortcuts defined here
-    // so they may, for example, forward the key presses as-is to a remote machine.
-    // It's a good idea to bind an escape hatch to toggle the inhibitor,
-    // so a buggy application can't hold your session hostage.
-    //
-    // The allow-inhibiting=false property can be applied to other binds as well,
-    // which ensures niri always processes them, even when an inhibitor is active.
+    // Kill inhibitors if an app captures keys.
     Super+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-    // The quit action will show a confirmation dialog to avoid accidental exits.
+    // Quit prompts.
     Super+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
 
-    // Powers off the monitors. To turn them back on, do any input like
-    // moving the mouse or pressing any other key.
+    // Display off/on.
     Super+Shift+P { power-off-monitors; }
     // Converted from binds.conf
     Super+Shift+S { spawn "sh" "-c" "slurp | grim -g - - | wl-copy"; }
@@ -417,10 +337,10 @@ binds {
     Super+Q { spawn "kitty" "-e" "tmux" "new-session" "-A" "-s" "main"; }
     Super+C { close-window; }
     Super+M { quit; }
-    Super+E { spawn "thunar"; }
+    Super+E { spawn "nautilus"; }
     Super+V { toggle-window-floating; }
     Super+R { spawn "rofi" "-show" "drun"; }
-    Super+Shift+G { spawn "thunar" "~/Pictures/Screenshots"; }
+    Super+Shift+G { spawn "nautilus" "~/Pictures/Screenshots"; }
 
     // Workspaces 1-10
     Super+0 { focus-workspace 10; }
