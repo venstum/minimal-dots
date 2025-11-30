@@ -1,6 +1,6 @@
 # minimal-dots
 
-A minimal Hyprland desktop configuration for Arch Linux.  
+A minimal Hyprland/Niri desktop configuration for Arch Linux.  
 
 ---
 
