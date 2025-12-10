@@ -2,7 +2,7 @@
     "output": "DP-1",
     "layer": "top",
     "position": "top",
-    "margin": "10 10 0",
+    "margin": "0 0 0",
     "mod": "dock",
     "exclusive": true,
     "passthrough": false,
@@ -10,32 +10,43 @@
     "height": 35,
     "spacing": 4, 
 
-    "modules-center": [
+    "modules-left": [
         "clock"
     ],
 
     "modules-right": [
         "pulseaudio",
-        "network",
+        "battery",
         "tray"
     ],
     
+    "clock": {
+        "format": "● {:%I:%M %p}",
+        "tooltip-format": "{:%A, %B %d %Y}"
+    },
+
     "pulseaudio": {
         "format": "{icon}",
         "format-icons": {
-            "default": [" ", " ", "  "]
+            "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
     },
-    
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip": false
+    },
+
     "network": {
-        "format-ethernet": "  ",
-        "format-disconnected": "⚠ ",
-	"on-click": "nm-connection-editor"
+        "format-wifi": "  {essid}",
+        "format-ethernet": "",
+        "format-disconnected": "  Offline"
     },
 
     "tray": {
-	"icon-size": 18,
+        "icon-size": 18,
         "spacing": 10
     }
 
