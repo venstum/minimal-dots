@@ -1,12 +1,9 @@
 * {
     font: "Terminus 12";
 
-    bg0: #00000000;    
-    bg1: #00000000;
-    fg0: #D8DEE9;
-
-    accent-color: #FFFFFF;
-    urgent-color: #EBCB8B;
+    bg0: #000000;
+    bg1: #000000;
+    fg0: #FFFFFF;
 
     background-color: transparent;
     text-color: @fg0;
@@ -18,7 +15,7 @@
 
 window {
     location: center;
-    width: 480;
+    width: 640;
 
     background-color: transparent;
     transparency: "real";
@@ -36,7 +33,7 @@ prompt, entry, element-icon, element-text {
 }
 
 prompt {
-    text-color: @accent-color;
+    text-color: @fg0;
 }
 
 textbox {
@@ -63,23 +60,21 @@ element normal normal {
 }
 
 element normal urgent {
-    text-color: @urgent-color;
+    text-color: @fg0;
 }
 
 element normal active {
-    text-color: @accent-color;
+    text-color: @fg0;
 }
 
 element selected {
     text-color: #000000;
 }
 
-element selected normal, element selected active {
-    background-color: @accent-color;
-}
-
+element selected normal,
+element selected active,
 element selected urgent {
-    background-color: @urgent-color;
+    background-color: #FFFFFF;
 }
 
 element-icon {
@@ -89,3 +84,4 @@ element-icon {
 element-text {
     text-color: inherit;
 }
+
